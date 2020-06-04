@@ -14,11 +14,5 @@ module.exports.callback = async function callback(code) {
         spotifyApi.setRefreshToken(data.body['refresh_token']);
     })
     .catch((error) => console.log(error))
-    await spotifyApi.authorizationCodeGrant(code)
-    .then((data) => {
-        console.log(data)
-        spotifyApi.setAccessToken(data.body['access_token']);
-        spotifyApi.setRefreshToken(data.body['refresh_token']);
-    })
-    .catch((error) => console.log(error))
+    spotifyApi.getMe().then((data) => console.log(data))
 }
