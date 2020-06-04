@@ -23,28 +23,32 @@ module.exports.callback = async function callback(code) {
             redirect_uri: 'https://spotify-me.herokuapp.com/callback'
         }
     }
-    await request(options)
-        .then((data) => {
-            spotifyApi.setAccessToken(data.access_token)
-            spotifyApi.setRefreshToken(data.refresh_token);
+    if (code.length > 0) {
+        await request(options)
+            .then((data) => {
+                spotifyApi.setAccessToken(data.access_token)
+                spotifyApi.setRefreshToken(data.refresh_token);
+            })
+            .catch((error) => console.log(error))
+    
+        await spotifyApi.getMe()
+            .then((data) => console.log(data.body))
+            .catch((error) => console.log(error))
+    
+        await spotifyApi.getFeaturedPlaylists({
+            limit: 15,
+            offset: 0,
+            country: 'US',
+            timestamp: date
         })
-        .catch((error) => console.log(error))
-
-    await spotifyApi.getMe()
-        .then((data) => console.log(data.body))
-        .catch((error) => console.log(error))
-
-    await spotifyApi.getFeaturedPlaylists({
-        limit: 15,
-        offset: 0,
-        country: 'US',
-        timestamp: date
-    })
-        .then(function (data) {
-            console.log('popular', data.body.playlists.items)
-        }, function (err) {
-            console.log("Something went wrong!", err);
-        })
-        .catch((error) => console.log(error))
+            .then(function (data) {
+                console.log('popular', data.body.playlists.items)
+            }, function (err) {
+                console.log("Something went wrong!", err);
+            })
+            .catch((error) => console.log(error))
+    }else{
+        console.log('no code provided')
+    }
 
 }
