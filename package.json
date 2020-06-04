@@ -1,0 +1,28 @@
+{
+  "name": "spotify.me",
+  "version": "1.0.0",
+  "description": "trying to create the old spotify.me webpage",
+  "main": "server.js",
+  "scripts": {
+    "test": "nodemon test",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rodri-dot-git/spotify.me.git"
+  },
+  "keywords": [
+    "spotify",
+    "api"
+  ],
+  "author": "Rodrigo Eugenio de Leon Castilla",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/rodri-dot-git/spotify.me/issues"
+  },
+  "homepage": "https://github.com/rodri-dot-git/spotify.me#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "spotify-web-api-node": "^4.0.0"
+  }
+}
