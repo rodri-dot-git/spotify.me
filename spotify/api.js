@@ -7,8 +7,10 @@ const spotifyApi = new SpotifyWebApi({
 });
 
 module.exports.callback = function callback(code) {
-    spotifyApi.authorizationCodeGrant(code).then((data) => {
+    spotifyApi.authorizationCodeGrant(code)
+    .then((data) => {
         spotifyApi.setAccessToken(data.body['access_token']);
         spotifyApi.setRefreshToken(data.body['refresh_token']);
     })
+    .catch((error) => console.log(error))
 }
