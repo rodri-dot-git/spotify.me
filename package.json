@@ -22,6 +22,7 @@
   },
   "homepage": "https://github.com/rodri-dot-git/spotify.me#readme",
   "dependencies": {
+    "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "spotify-web-api-node": "^4.0.0"
   }
