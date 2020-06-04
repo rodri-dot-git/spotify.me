@@ -34,7 +34,7 @@ app.get('/login', function (req, res) {
 });
 
 app.get('/callback', function (req, res) {
-    callback(req.code)
+    callback(req.query.code)
     res.redirect("/index")
 });
 //#endregion
