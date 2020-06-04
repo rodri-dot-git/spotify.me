@@ -6,7 +6,7 @@ const express = require("express");
 dotenv.config();
 const app = express();
 const http = require("http").createServer(app);
-
+const callback = require('./spotify').callback
 //#endregion
 
 //#region app use
@@ -34,7 +34,7 @@ app.get('/login', function (req, res) {
 });
 
 app.get('/callback', function (req, res) {
-
+    callback(req.code)
 });
 //#endregion
 
