@@ -19,10 +19,25 @@ app.use("/public", express.static(path.join(__dirname, "/public")));
 app.get("/", (_, res) => res.redirect("/index"))
 
 app.get("/index", (_, res) => {
-	res.sendFile(path.join(__dirname, "public/views/index.html"));
+    res.sendFile(path.join(__dirname, "public/views/index.html"));
+});
+
+app.get('/login', function (req, res) {
+    const scopes = `user-read-private user-read-email user-top-read 
+    user-read-playback-position user-read-recently-played`;
+    let redirect_uri = 'https://spotify-me.herokuapp.com/callback'
+    res.redirect('https://accounts.spotify.com/authorize' +
+        '?response_type=code' +
+        '&client_id=' + process.env.SPOTIFY_ID +
+        (scopes ? '&scope=' + encodeURIComponent(scopes) : '') +
+        '&redirect_uri=' + encodeURIComponent(redirect_uri));
+});
+
+app.get('/callback', function (req, res) {
+
 });
 //#endregion
 
 http.listen(process.env.PORT || 4000, () => {
-	console.log("🚀🚀 Server ready");
+    console.log("🚀🚀 Server ready");
 });
