@@ -9,6 +9,7 @@ const spotifyApi = new SpotifyWebApi({
 module.exports.callback = function callback(code) {
     spotifyApi.authorizationCodeGrant(code)
     .then((data) => {
+        console.log(data)
         spotifyApi.setAccessToken(data.body['access_token']);
         spotifyApi.setRefreshToken(data.body['refresh_token']);
     })
