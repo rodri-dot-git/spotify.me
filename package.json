@@ -4,7 +4,7 @@
   "description": "trying to create the old spotify.me webpage",
   "main": "server.js",
   "scripts": {
-    "test": "nodemon test",
+    "test": "nodemon server.js",
     "start": "node server.js"
   },
   "repository": {
