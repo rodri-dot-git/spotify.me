@@ -16,6 +16,8 @@ app.use("/public", express.static(path.join(__dirname, "/public")));
 //#endregion
 
 //#region rutas get
+app.get("/", (req, res) => res.redirect("/index"))
+
 app.get("/index", (req, res) => {
 	res.sendFile(path.join(__dirname, "public/views/index.html"));
 });
