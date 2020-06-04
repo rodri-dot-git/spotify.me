@@ -14,9 +14,14 @@ module.exports.callback = async function callback(code) {
         spotifyApi.setRefreshToken(data.body['refresh_token']);
     })
     .catch((error) => console.log(error))
+
     spotifyApi.getMe()
     .then((data) => console.log(data.body))
     .catch((error) => console.log(error))
+
+    let date = new Date();
+	date.setHours(date.getHours() - 7)
+
     spotifyApi.getFeaturedPlaylists({
         limit: 15,
         offset: 0,
