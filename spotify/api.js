@@ -8,6 +8,7 @@ const spotifyApi = new SpotifyWebApi({
 const request = require('request-promise')
 
 module.exports.callback = async function callback(code) {
+    console.log(code)
     const options = {
         method: 'POST',
         json: true,
