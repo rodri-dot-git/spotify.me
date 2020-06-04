@@ -14,5 +14,20 @@ module.exports.callback = async function callback(code) {
         spotifyApi.setRefreshToken(data.body['refresh_token']);
     })
     .catch((error) => console.log(error))
-    spotifyApi.getMe().then((data) => console.log(data))
+    spotifyApi.getMe()
+    .then((data) => console.log(data.body))
+    .catch((error) => console.log(error))
+    spotifyApi.getFeaturedPlaylists({
+        limit: 15,
+        offset: 0,
+        country: 'US',
+        timestamp: date
+    })
+    .then(function (data) {
+        console.log('popular', data.body.playlists.items)
+    }, function (err) {
+        console.log("Something went wrong!", err);
+    })
+    .catch((error) => console.log(error))
+
 }
