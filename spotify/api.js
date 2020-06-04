@@ -5,31 +5,45 @@ const spotifyApi = new SpotifyWebApi({
     clientId: process.env.SPOTIFY_ID,
     clientSecret: process.env.SPOTIFY_SECRET,
 });
+const request = require('request-promise')
 
 module.exports.callback = async function callback(code) {
-    await spotifyApi.authorizationCodeGrant(code)
-    .then((data) => {
-        console.log(data.body)
-        spotifyApi.setAccessToken(data.body['access_token']);
-        spotifyApi.setRefreshToken(data.body['refresh_token']);
-    })
-    .catch((error) => console.log(error))
+    const options = {
+        method: 'POST',
+        json: true,
+        uri: 'https://accounts.spotify.com/api/token',
+        headers: {
+            'content-type': 'application/x-www-form-urlencoded',
+            'Authorization': 'Basic NzMzNWFlZGE2YzQyNDg1NGFkNThjZjUyNzJkNmNiY2E6ZmFmNjUxYzMwMTY0NDQ0ZWI2YTY4MWFkYjZmNDIwZWM='
+        },
+        form: {
+            grant_type: 'authorization_code',
+            code: code,
+            redirect_uri: 'https://spotify-me.herokuapp.com/callback'
+        }
+    }
+    await request(options)
+        .then((data) => {
+            spotifyApi.setAccessToken(data.access_token)
+            spotifyApi.setRefreshToken(data.refresh_token);
+        })
+        .catch((error) => console.log(error))
 
-    spotifyApi.getMe()
-    .then((data) => console.log(data.body))
-    .catch((error) => console.log(error))
-    
-    spotifyApi.getFeaturedPlaylists({
+    await spotifyApi.getMe()
+        .then((data) => console.log(data.body))
+        .catch((error) => console.log(error))
+
+    await spotifyApi.getFeaturedPlaylists({
         limit: 15,
         offset: 0,
         country: 'US',
         timestamp: date
     })
-    .then(function (data) {
-        console.log('popular', data.body.playlists.items)
-    }, function (err) {
-        console.log("Something went wrong!", err);
-    })
-    .catch((error) => console.log(error))
+        .then(function (data) {
+            console.log('popular', data.body.playlists.items)
+        }, function (err) {
+            console.log("Something went wrong!", err);
+        })
+        .catch((error) => console.log(error))
 
 }
