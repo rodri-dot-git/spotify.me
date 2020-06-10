@@ -9,12 +9,7 @@ const spotifyApi = new SpotifyWebApi({
 module.exports.callback = async function callback(code) {
     await spotifyApi.clientCredentialsGrant(code)
     .then(async (data) => {
-        await spotifyApi.setAccessToken(data.body['access_token'])
-        .then(() => {
-            spotifyApi.getMe()
-            .then((data) => console.log(data.body))
-            .catch((error) => console.log(error))
-        })
+        await spotifyApi.setAccessToken(data.body['access_token']);
         await spotifyApi.setRefreshToken(data.body['refresh_token']);
     })
     .catch((error) => console.log(error))
@@ -36,4 +31,10 @@ module.exports.callback = async function callback(code) {
     })
     .catch((error) => console.log(error))
 
+}
+
+module.exports.getMe() = function () {
+    spotifyApi.getMe()
+        .then((data) => data.body)
+        .catch((error) => console.log(error))
 }
